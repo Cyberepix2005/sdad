@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Zeroo AI - Intelligent Solutions</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    header {
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #161b22;
+      border-bottom: 2px solid #238636;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      animation: slideDown 0.7s ease forwards;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      color: #58a6ff;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 1.8rem;
+      cursor: default;
+      animation: glow 2.5s ease-in-out infinite;
+      flex: 1 1 150px;
+      white-space: nowrap;
+    }
+
+    nav {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #8b949e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      position: relative;
+      white-space: nowrap;
+      font-size: 1rem;
+      padding: 5px 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #58a6ff;
+      left: 0;
+      bottom: -6px;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #58a6ff;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 75vh;
+      padding: 40px 20px 60px;
+      text-align: center;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(30px);
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      color: #fff;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('bg.jpg') no-repeat center center/cover;
+      opacity: 0.3;
+      filter: brightness(0.5);
+      z-index: -10;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .hero.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #58a6ff;
+      text-shadow: 0 0 10px #58a6ff;
+      animation: glowText 3s ease-in-out infinite;
+      line-height: 1.1;
+      z-index: 2;
+      position: relative;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 650px;
+      margin-bottom: 40px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      padding: 0 10px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .btn-primary {
+      background-color: #238636;
+      color: white;
+      padding: 15px 50px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      box-shadow: 0 8px 15px rgba(35, 134, 54, 0.4);
+      user-select: none;
+      max-width: 250px;
+      width: 100%;
+      z-index: 2;
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary:hover {
+      background-color: #2ea043;
+      transform: scale(1.05);
+      box-shadow: 0 12px 20px rgba(46, 160, 67, 0.7);
+    }
+
+    .latest-feature {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .latest-feature h3 {
+      font-size: 1.6rem;
+      color: #58a6ff;
+      margin-bottom: 20px;
+    }
+
+    .latest-feature img {
+      width: 85%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(88, 166, 255, 0.4);
+    }
+
+    /* Our Technologies Section */
+    .technologies {
+      text-align: center;
+      margin-bottom: 50px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 20px;
+      color: #c9d1d9;
+    }
+
+    .technologies h3 {
+      font-size: 1.8rem;
+      color: #58a6ff;
+      margin-bottom: 30px;
+      text-shadow: 0 0 8px #58a6ff;
+    }
+
+    .tech-logos {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .tech-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 120px;
+      cursor: default;
+      transition: transform 0.3s ease;
+    }
+
+    .tech-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px #238636);
+      margin-bottom: 12px;
+      transition: filter 0.3s ease;
+    }
+
+    .tech-item:hover {
+      transform: scale(1.1);
+    }
+
+    .tech-item:hover img {
+      filter: drop-shadow(0 0 10px #2ea043);
+    }
+
+    .tech-item span {
+      color: #8b949e;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .recent {
+      background-color: #161b22;
+      padding: 60px 20px 80px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      color: #c9d1d9;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature {
+      flex: 1 1 320px;
+      background: #0d1117d0;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(35, 134, 54, 0.7);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(30px);
+      min-width: 280px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .feature.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 0 30px rgba(35, 134, 54, 1);
+    }
+
+    .feature h3 {
+      margin-bottom: 15px;
+      color: #58a6ff;
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px #58a6ff;
+    }
+
+    .feature p {
+      font-size: 1rem;
+      color: #8b949e;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 10px;
+      background-color: #161b22;
+      color: #8b949e;
+      font-size: 0.9rem;
+      border-top: 2px solid #238636;
+      user-select: none;
+      max-width: 100%;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        text-shadow: 0 0 10px #58a6ff;
+      }
+      50% {
+        text-shadow: 0 0 20px #58a6ff, 0 0 30px #238636;
+      }
+    }
+
+    @keyframes glowText {
+      0%, 100% {
+        text-shadow: 0 0 15px #58a6ff;
+      }
+      50% {
+        text-shadow: 0 0 25px #2ea043, 0 0 40px #58a6ff;
+      }
+    }
+
+    @keyframes slideDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+
+      .latest-feature img {
+        width: 95%;
+      }
+
+      .feature {
+        min-width: 90%;
+      }
+
+      .tech-logos {
+        gap: 25px;
+      }
+
+      .tech-item img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .tech-item span {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Zeroo AI</h1>
+    <nav>
+      <a href="#recent">Recent</a>
+      <a href="APPS.HTML">Apps</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="hero">
+    <h2>Revolutionize Your Future with AI</h2>
+    <p>Harness the power of artificial intelligence to transform your ideas into reality. Experience innovation like never before.</p>
+    <button class="btn-primary" onclick="alert('Welcome to Zeroo AI!')">Get Started</button>
+
+    <div class="latest-feature">
+      <h3>Latest Feature</h3>
+      <a href="unicode.html" target="_blank">
+        <img src="unicodegif.gif" alt="Latest AI Feature" />
+      </a>
+    </div>
+
+    <!-- Our Technologies Section -->
+    <section class="technologies" aria-label="Our Technologies">
+      <h3>Our Technologies</h3>
+      <div class="tech-logos">
+        <div class="tech-item" title="TensorFlow">
+          <img src="ChatGPT-Logo-removebg-preview.png" alt="TensorFlow Logo" />
+          <span>ChatGpt</span>
+        </div>
+        <div class="tech-item" title="PyTorch">
+          <img src="Deepseek-removebg-preview.png" alt="PyTorch Logo" />
+          <span>Deepseek</span>
+        </div>
+        <div class="tech-item" title="OpenAI">
+          <img src="cordova_256-removebg-preview (1).png" alt="OpenAI Logo" />
+          <span>Cordova</span>
+        </div>
+        <div class="tech-item" title="Hugging Face">
+          <img src="flutter-logo-blue-modern-flat-design-icon-1-removebg-preview.png" alt="Hugging Face Logo" />
+          <span>Flutter</span>
+        </div>
+        <div class="tech-item" title="FastAPI">
+          <img src="Github-desktop-logo-symbol.svg-removebg-preview.png" alt="FastAPI Logo" />
+          <span>Github</span>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section class="recent" id="recent">
+    <a href="#" class="feature visible">
+      <h3>Advanced Natural Language Processing</h3>
+      <p>Leverage state-of-the-art NLP models to understand and generate human language with unprecedented accuracy and speed.</p>
+    </a>
+    <a href="#" class="feature visible">
+      <h3>Real-time Data Analytics</h3>
+      <p>Our platform processes data streams in real time, enabling dynamic decision-making and actionable insights.</p>
+    </a>
+    <a href="unicode.html" class="feature visible">
+      <h3>Robust Computer Vision</h3>
+      <p>Integrate powerful computer vision capabilities to analyze images and videos for various applications including security and automation.</p>
+    </a>
+  </section>
+
+  <footer>
+    &copy; 2025 Zeroo AI. All rights reserved.
+  </footer>
+
+  <script>
+    // Show hero content with animation
+    window.addEventListener('load', () => {
+      document.querySelector('.hero').classList.add('visible');
+      // Animate features sequentially
+      const features = document.querySelectorAll('.feature');
+      features.forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 300 * i);
+      });
+    });
+  </script>
+</body>
+</html>

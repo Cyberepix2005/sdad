@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play Store Preview</title>
+  <style>
+    /* Background image with overlay */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: 
+        linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+        url('unibg.png') no-repeat center center fixed;
+      background-size: cover;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .app-container {
+      background: #1e1e1e00; /* slightly transparent dark */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0);
+      max-width: 400px;
+      width: 100%;
+      overflow: hidden;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+    .app-container:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 16px rgba(0, 255, 170, 0.5);
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .app-logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 20%;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 2px solid #00ffaa;
+    }
+
+    .app-details {
+      flex: 1;
+    }
+
+    .app-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #00ffaa;
+    }
+
+    .app-author {
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .download-button {
+      display: block;
+      text-align: center;
+      margin: 0 20px 15px 20px;
+    }
+
+    .download-button a {
+      background: #00c853;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      display: inline-block;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 200, 83, 0.4);
+    }
+
+    .download-button a:hover {
+      background: #00b44b;
+      box-shadow: 0 6px 12px rgba(0, 180, 75, 0.7);
+    }
+
+    .screenshots {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px 20px 20px 20px;
+    }
+
+    .screenshots img {
+      width: 200px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(0, 255, 170, 0.4);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .screenshots img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 255, 170, 0.7);
+    }
+
+    .screenshots::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .screenshots::-webkit-scrollbar-thumb {
+      background: #5555559d;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- App 1 -->
+  <div class="app-container">
+    <div class="app-header">
+      <img src="APP1.png" alt="App 1 Logo" class="app-logo"> 
+      <div class="app-details">
+        <div class="app-title">App One</div>
+        <div class="app-author">Zeroo Ai</div>
+      </div>
+    </div>
+    <div class="download-button">
+      <a href="https://play.google.com/store/apps/details?id=com.your.app1" target="_blank">Download App</a>
+    </div>
+    <div class="screenshots">
+      <img src="1.png" alt="App 1 Screenshot 1">
+      <img src="2.png" alt="App 1 Screenshot 2">
+      <img src="3.png" alt="App 1 Screenshot 3">
+      <img src="4.png" alt="App 1 Screenshot 4">
+    </div>
+  </div>
+
+  <!-- App 2 -->
+  <div class="app-container">
+    <div class="app-header">
+      <img src="app2.png" alt="App 2 Logo" class="app-logo">
+      <div class="app-details">
+        <div class="app-title">BanaPotha</div>
+        <div class="app-author">Zeroo Ai</div>
+      </div>
+    </div>
+    <div class="download-button">
+      <a href="https://apkpure.com/banapotha/lk.imaginstudio.banapotha" target="_blank">Download App</a>
+    </div>
+    <div class="screenshots">
+      <img src="converted-image (18).png" alt="App 2 Screenshot 1">
+      <img src="converted-image (19).png" alt="App 2 Screenshot 2">
+      <img src="converted-image (20).png" alt="App 2 Screenshot 3">
+      <img src="converted-image (21).png" alt="App 2 Screenshot 4">
+    </div>
+  </div>
+   <!-- App 3-->
+  <div class="app-container">
+    <div class="app-header">
+      <img src="app3.png" alt="App 3 Logo" class="app-logo">
+      <div class="app-details">
+        <div class="app-title">MintBmiCalculator</div>
+        <div class="app-author">Zeroo Ai</div>
+      </div>
+    </div>
+    <div class="download-button">
+      <a href="https://apkpure.com/mintbmicalculator/com.cyberepix.MintBmiCalculator" target="_blank">Download App</a>
+    </div>
+    <div class="screenshots">
+      <img src="1.jpg" alt="App 3 Screenshot 1">
+      <img src="2.jpg" alt="App 3 Screenshot 2">
+      <img src="3.jpg" alt="App 3 Screenshot 3">
+    </div>
+  </div>
+
+</body>
+</html>

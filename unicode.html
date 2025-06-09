@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinhala Unicode Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-light: #6b8cba;
+            --secondary: #ff7e5f;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --success: #000000;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --bg-image: url('unibg.png');
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            padding: 20px;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            --dark: #f8f9fa;
+            --light: #2c3e50;
+            color: var(--dark);
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .container {
+            background: rgba(44, 62, 80, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .converter-container {
+            padding: 25px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            resize: vertical;
+            min-height: 150px;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        body.dark-mode textarea {
+            background-color: rgba(30, 40, 50, 0.8);
+            border-color: #444;
+            color: #f0f0f0;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+        
+        .sinhala-text {
+            font-family: 'Iskoola Pota', 'Arial Unicode MS', sans-serif;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: var(--dark);
+        }
+        
+        body.dark-mode .btn-secondary {
+            background-color: #495057;
+            color: #f8f9fa;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+        
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .toggle-scheme {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 8px 15px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .toggle-scheme:hover {
+            background-color: #ff6b4a;
+        }
+        
+        .scheme-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+        
+        body.dark-mode .scheme-container {
+            background-color: #343a40;
+        }
+        
+        .scheme-container.visible {
+            max-height: 2000px;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+        
+        body.dark-mode .scheme-container.visible {
+            border-color: #495057;
+        }
+        
+        .scheme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .scheme-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+        }
+        
+        body.dark-mode .scheme-section {
+            background-color: #495057;
+        }
+        
+        .scheme-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light);
+            font-weight: 500;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        body.dark-mode td {
+            border-bottom-color: #495057;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        body.dark-mode tr:nth-child(even) {
+            background-color: #495057;
+        }
+        
+        body.dark-mode tr:nth-child(odd) {
+            background-color: #3e4a56;
+        }
+        
+        .sinhala-char {
+            font-family: 'Iskoola Pota', 'Arial Unicode MS', sans-serif;
+            font-size: 18px;
+        }
+        
+        .english-char {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        body.dark-mode .english-char {
+            color: #bbb;
+        }
+        
+        .dark-mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-mode .dark-mode-toggle {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        body.dark-mode .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .scheme-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sinhala Unicode Converter</h1>
+            <p class="subtitle">Convert Singlish to Sinhala Unicode in real-time</p>
+            <button class="dark-mode-toggle" id="darkModeToggle">🌓</button>
+        </header>
+        
+        <div class="converter-container">
+            <div class="input-group">
+                <label for="input-text">Singlish (Transliterated Text)</label>
+                <textarea id="input-text" onkeyup="startText();" onselect="startText();" onclick="startText();" placeholder="Type Singlish text here (e.g.: 'ayubowan')"></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="document.getElementById('input-text').value=''; startText();">Clear</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="output-text">Sinhala Unicode</label>
+                <textarea id="output-text" class="sinhala-text" readonly placeholder="Sinhala Unicode will appear here"></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-success" onclick="copyToClipboard()">Copy Sinhala Text</button>
+            </div>
+            
+            <div class="toggle-scheme" id="toggle-scheme" onclick="toggleScheme()">Show Transliteration Scheme</div>
+            
+            <div class="scheme-container" id="scheme-container">
+                <div class="scheme-grid">
+                    <div class="scheme-section">
+                        <h3 class="scheme-title">Vowels</h3>
+                        <table>
+                            <tr>
+                                <th>Sinhala</th>
+                                <th>Singlish</th>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">අ</td>
+                                <td class="english-char">a</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ආ</td>
+                                <td class="english-char">aa, a)</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඇ</td>
+                                <td class="english-char">A, /a</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඈ</td>
+                                <td class="english-char">Aa, A), ae</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඉ</td>
+                                <td class="english-char">i</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඊ</td>
+                                <td class="english-char">ii, i), ie, ee</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">උ</td>
+                                <td class="english-char">u</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඌ</td>
+                                <td class="english-char">uu, u), oo</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">එ</td>
+                                <td class="english-char">e</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඒ</td>
+                                <td class="english-char">ea, e), ei</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඔ</td>
+                                <td class="english-char">o</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඕ</td>
+                                <td class="english-char">oe, o)</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඖ</td>
+                                <td class="english-char">au</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="scheme-section">
+                        <h3 class="scheme-title">Common Consonants</h3>
+                        <table>
+                            <tr>
+                                <th>Sinhala</th>
+                                <th>Singlish</th>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ක</td>
+                                <td class="english-char">k</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ග</td>
+                                <td class="english-char">g</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ච</td>
+                                <td class="english-char">ch</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ජ</td>
+                                <td class="english-char">j</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ට</td>
+                                <td class="english-char">t</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඩ</td>
+                                <td class="english-char">d</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ත</td>
+                                <td class="english-char">th</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ද</td>
+                                <td class="english-char">dh</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ප</td>
+                                <td class="english-char">p</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">බ</td>
+                                <td class="english-char">b</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ම</td>
+                                <td class="english-char">m</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ය</td>
+                                <td class="english-char">y</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="scheme-section">
+                        <h3 class="scheme-title">Special Characters</h3>
+                        <table>
+                            <tr>
+                                <th>Sinhala</th>
+                                <th>Singlish</th>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ර්‍</td>
+                                <td class="english-char">R, \r</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">්‍ය</td>
+                                <td class="english-char">Y, \y</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ෘ</td>
+                                <td class="english-char">ru</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ෲ</td>
+                                <td class="english-char">ruu</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ං</td>
+                                <td class="english-char">\n</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඃ</td>
+                                <td class="english-char">\h</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ඞ</td>
+                                <td class="english-char">\N</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ශ</td>
+                                <td class="english-char">sh</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ෂ</td>
+                                <td class="english-char">Sh</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ෆ</td>
+                                <td class="english-char">f</td>
+                            </tr>
+                            <tr>
+                                <td class="sinhala-char">ළු</td>
+                                <td class="english-char">Lu</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <h3 class="scheme-title" style="margin-top: 20px;">Examples</h3>
+                <table>
+                    <tr>
+                        <th>Sinhala</th>
+                        <th>Singlish</th>
+                    </tr>
+                    <tr>
+                        <td class="sinhala-char">සිංහල</td>
+                        <td class="english-char">sinhala</td>
+                    </tr>
+                    <tr>
+                        <td class="sinhala-char">ආයුබෝවන්</td>
+                        <td class="english-char">ayubowan</td>
+                    </tr>
+                    <tr>
+                        <td class="sinhala-char">උද්‍යානය</td>
+                        <td class="english-char">udyaanaya</td>
+                    </tr>
+                    <tr>
+                        <td class="sinhala-char">ප්‍රජාතන්ත්‍රවාදී</td>
+                        <td class="english-char">prajathanthrawaadhee</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Original conversion code remains the same
+        var text;
+        var nVowels;
+        var consonants= new Array()
+        var consonantsUni= new Array()
+        var vowels= new Array()
+        var vowelsUni= new Array()
+        var vowelModifiersUni= new Array()
+        var specialConsonants= new Array()
+        var specialConsonantsUni= new Array()
+        var specialCharUni= new Array()
+        var specialChar= new Array()
+
+        vowelsUni[0]='ඌ';    vowels[0]='oo';    vowelModifiersUni[0]='ූ';
+        vowelsUni[1]='ඕ';    vowels[1]='o\\)';    vowelModifiersUni[1]='ෝ';
+        vowelsUni[2]='ඕ';    vowels[2]='oe';    vowelModifiersUni[2]='ෝ';
+        vowelsUni[3]='ආ';    vowels[3]='aa';    vowelModifiersUni[3]='ා';
+        vowelsUni[4]='ආ';    vowels[4]='a\\)';    vowelModifiersUni[4]='ා';
+        vowelsUni[5]='ඈ';    vowels[5]='Aa';    vowelModifiersUni[5]='ෑ';
+        vowelsUni[6]='ඈ';    vowels[6]='A\\)';    vowelModifiersUni[6]='ෑ';
+        vowelsUni[7]='ඈ';    vowels[7]='ae';    vowelModifiersUni[7]='ෑ';
+        vowelsUni[8]='ඊ';    vowels[8]='ii';    vowelModifiersUni[8]='ී';
+        vowelsUni[9]='ඊ';    vowels[9]='i\\)';    vowelModifiersUni[9]='ී';
+        vowelsUni[10]='ඊ';    vowels[10]='ie';    vowelModifiersUni[10]='ී';
+        vowelsUni[11]='ඊ';    vowels[11]='ee';    vowelModifiersUni[11]='ී';
+        vowelsUni[12]='ඒ';    vowels[12]='ea';    vowelModifiersUni[12]='ේ';
+        vowelsUni[13]='ඒ';    vowels[13]='e\\)';    vowelModifiersUni[13]='ේ';
+        vowelsUni[14]='ඒ';    vowels[14]='ei';    vowelModifiersUni[14]='ේ';
+        vowelsUni[15]='ඌ';    vowels[15]='uu';    vowelModifiersUni[15]='ූ';
+        vowelsUni[16]='ඌ';    vowels[16]='u\\)';    vowelModifiersUni[16]='ූ';
+        vowelsUni[17]='ඖ';    vowels[17]='au';    vowelModifiersUni[17]='ෞ';
+        vowelsUni[18]='ඇ';    vowels[18]='/\a';    vowelModifiersUni[18]='ැ';
+        
+        vowelsUni[19]='අ';    vowels[19]='a';    vowelModifiersUni[19]='';
+        vowelsUni[20]='ඇ';    vowels[20]='A';    vowelModifiersUni[20]='ැ';
+        vowelsUni[21]='ඉ';    vowels[21]='i';    vowelModifiersUni[21]='ි';
+        vowelsUni[22]='එ';    vowels[22]='e';    vowelModifiersUni[22]='ෙ';
+        vowelsUni[23]='උ';    vowels[23]='u';    vowelModifiersUni[23]='ු';
+        vowelsUni[24]='ඔ';    vowels[24]='o';    vowelModifiersUni[24]='ො';
+        vowelsUni[25]='ඓ';    vowels[25]='I';    vowelModifiersUni[25]='ෛ';
+        nVowels=26;
+
+        specialConsonantsUni[0]='ං'; specialConsonants[0]=/\\n/g;
+        specialConsonantsUni[1]='ඃ'; specialConsonants[1]=/\\h/g;
+        specialConsonantsUni[2]='ඞ'; specialConsonants[2]=/\\N/g;
+        specialConsonantsUni[3]='ඍ'; specialConsonants[3]=/\\R/g;
+        //special characher Repaya
+        specialConsonantsUni[4]='ර්'+'\u200D'; specialConsonants[4]=/R/g;
+        specialConsonantsUni[5]='ර්'+'\u200D'; specialConsonants[5]=/\\r/g;
+        
+        consonantsUni[0]='ඬ'; consonants[0]='nnd';
+        consonantsUni[1]='ඳ'; consonants[1]='nndh';
+        consonantsUni[2]='ඟ'; consonants[2]='nng';
+        consonantsUni[3]='ථ'; consonants[3]='Th';
+        consonantsUni[4]='ධ'; consonants[4]='Dh';
+        consonantsUni[5]='ඝ'; consonants[5]='gh';
+        consonantsUni[6]='ඡ'; consonants[6]='Ch';
+        consonantsUni[7]='ඵ'; consonants[7]='ph';
+        consonantsUni[8]='භ'; consonants[8]='bh';
+        consonantsUni[9]='ශ'; consonants[9]='sh';
+        consonantsUni[10]='ෂ'; consonants[10]='Sh';
+        consonantsUni[11]='ඥ'; consonants[11]='GN';
+        consonantsUni[12]='ඤ'; consonants[12]='KN';
+        consonantsUni[13]='ළු'; consonants[13]='Lu';
+        consonantsUni[14]='ද'; consonants[14]='dh';
+        consonantsUni[15]='ච'; consonants[15]='ch';
+        consonantsUni[16]='ඛ'; consonants[16]='kh';
+        consonantsUni[17]='ත'; consonants[17]='th';
+        
+        consonantsUni[18]='ට'; consonants[18]='t';
+        consonantsUni[19]='ක'; consonants[19]='k';    
+        consonantsUni[20]='ඩ'; consonants[20]='d';
+        consonantsUni[21]='න'; consonants[21]='n';
+        consonantsUni[22]='ප'; consonants[22]='p';
+        consonantsUni[23]='බ'; consonants[23]='b';
+        consonantsUni[24]='ම'; consonants[24]='m';   
+        consonantsUni[25]='‍ය'; consonants[25]='\\u005C' + 'y';
+        consonantsUni[26]='‍ය'; consonants[26]='Y';
+        consonantsUni[27]='ය'; consonants[27]='y';
+        consonantsUni[28]='ජ'; consonants[28]='j';
+        consonantsUni[29]='ල'; consonants[29]='l';
+        consonantsUni[30]='ව'; consonants[30]='v';
+        consonantsUni[31]='ව'; consonants[31]='w';
+        consonantsUni[32]='ස'; consonants[32]='s';
+        consonantsUni[33]='හ'; consonants[33]='h';
+        consonantsUni[34]='ණ'; consonants[34]='N';
+        consonantsUni[35]='ළ'; consonants[35]='L';
+        consonantsUni[36]='ඛ'; consonants[36]='K';
+        consonantsUni[37]='ඝ'; consonants[37]='G';
+        consonantsUni[38]='ඨ'; consonants[38]='T';
+        consonantsUni[39]='ඪ'; consonants[39]='D';
+        consonantsUni[40]='ඵ'; consonants[40]='P';
+        consonantsUni[41]='ඹ'; consonants[41]='B';
+        consonantsUni[42]='ෆ'; consonants[42]='f';
+        consonantsUni[43]='ඣ'; consonants[43]='q';
+        consonantsUni[44]='ග'; consonants[44]='g';
+        //last because we need to ommit this in dealing with Rakaransha
+        consonantsUni[45]='ර'; consonants[45]='r';
+
+        specialCharUni[0]='ෲ'; specialChar[0]='ruu';
+        specialCharUni[1]='ෘ'; specialChar[1]='ru';
+
+        function startText() {
+            var s,r,v;
+            text = document.getElementById('input-text').value;  
+            //special consonents
+            for (var i=0; i<specialConsonants.length; i++){
+                text = text.replace(specialConsonants[i], specialConsonantsUni[i]);
+            }
+            //consonents + special Chars
+            for (var i=0; i<specialCharUni.length; i++){
+                for (var j=0;j<consonants.length;j++){
+                    s = consonants[j] + specialChar[i];
+                    v = consonantsUni[j] + specialCharUni[i];
+                    r = new RegExp(s, "g");
+                    text = text.replace(r, v);
+                }
+            }
+            //consonants + Rakaransha + vowel modifiers
+            for (var j=0;j<consonants.length;j++){
+                for (var i=0;i<vowels.length;i++){
+                    s = consonants[j] + "r" + vowels[i];
+                    v = consonantsUni[j] + "්‍ර" + vowelModifiersUni[i];
+                    r = new RegExp(s, "g");
+                    text = text.replace(r, v);
+                }
+                s = consonants[j] + "r";
+                v = consonantsUni[j] + "්‍ර";
+                r = new RegExp(s, "g");
+                text = text.replace(r, v);
+            }
+            //consonents + vowel modifiers
+            for (var i=0;i<consonants.length;i++){
+                for (var j=0;j<nVowels;j++){ 
+                    s = consonants[i]+vowels[j];
+                    v = consonantsUni[i] + vowelModifiersUni[j];
+                    r = new RegExp(s, "g");
+                    text = text.replace(r, v);
+                }
+            }
+
+            //consonents + HAL
+            for (var i=0; i<consonants.length; i++){
+                r = new RegExp(consonants[i], "g");
+                text = text.replace(r, consonantsUni[i]+"්");
+            }
+                
+            //vowels
+            for (var i=0; i<vowels.length; i++){
+                r = new RegExp(vowels[i], "g");
+                text = text.replace(r, vowelsUni[i]);
+            }
+
+            document.getElementById('output-text').value = text;
+        }
+
+        function copyToClipboard() {
+            var copyText = document.getElementById("output-text");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            
+            // Show feedback
+            var originalText = document.querySelector('.btn-success').textContent;
+            document.querySelector('.btn-success').textContent = "Copied!";
+            setTimeout(function() {
+                document.querySelector('.btn-success').textContent = originalText;
+            }, 2000);
+        }
+
+        function toggleScheme() {
+            var scheme = document.getElementById('scheme-container');
+            var toggleBtn = document.getElementById('toggle-scheme');
+            
+            scheme.classList.toggle('visible');
+            
+            if (scheme.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Transliteration Scheme';
+            } else {
+                toggleBtn.textContent = 'Show Transliteration Scheme';
+            }
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Set up dark mode toggle button
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+        // Focus on input when page loads
+        window.onload = function() {
+            document.getElementById('input-text').focus();
+        };
+    </script>
+</body>
+</html>
