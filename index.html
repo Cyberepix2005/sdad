@@ -174,6 +174,32 @@
       box-shadow: 0 12px 20px rgba(46, 160, 67, 0.7);
     }
 
+    .get-started-message {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid #58a6ff;
+      animation: fadeIn 1s ease;
+    }
+
+    .get-started-message p {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .get-started-message a {
+      color: #58a6ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .get-started-message a:hover {
+      color: #2ea043;
+      text-decoration: underline;
+    }
+
     .latest-feature {
       text-align: center;
       margin-bottom: 50px;
@@ -354,6 +380,15 @@
       }
     }
 
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
     @media (max-width: 768px) {
       .hero h2 {
         font-size: 2.2rem;
@@ -396,7 +431,12 @@
   <section class="hero" id="hero">
     <h2>Revolutionize Your Future with AI</h2>
     <p>Harness the power of artificial intelligence to transform your ideas into reality. Experience innovation like never before.</p>
-    <a href="getstarted.html" class="btn-primary">Get Started</a>
+    
+    <div class="get-started-message">
+      <p>Want to create a static website?</p>
+      <p>Contact me now to get started! 📞</p>
+      <a href="https://cyberepix2005.github.io/project/" target="_blank">Get Started with Zeroo AI</a>
+    </div>
 
     <div class="latest-feature">
       <h3>Latest Feature</h3>
